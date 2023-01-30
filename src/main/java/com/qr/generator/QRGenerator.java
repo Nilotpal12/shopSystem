@@ -15,7 +15,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 public class QRGenerator {
 
     public static void generate() {
-    	
+    	// Basic data generation
         String qrCodeData = "https://google.com";
         String filePath = "src/main/resources/images/QRCode.png";
         int size = 125;
