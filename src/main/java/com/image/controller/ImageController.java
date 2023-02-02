@@ -19,13 +19,12 @@ import com.qr.generator.QRGenerator;
 @RequestMapping("/api/image")
 public class ImageController {
 	
-	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/check", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getImage() {
         try {
         	
         	String data = "Service is UP";
 
-            // return image as a response
             return ResponseEntity.ok().body(data);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
