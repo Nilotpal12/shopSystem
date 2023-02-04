@@ -22,7 +22,7 @@ public class ImageController {
 	@GetMapping(value = "/check", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getImage() {
         try {
-        	
+        	//just a check
         	String data = "Service is UP";
 
             return ResponseEntity.ok().body(data);
