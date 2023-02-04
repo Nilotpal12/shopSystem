@@ -31,7 +31,7 @@ public class ImageController {
         }
     }
 
-    @GetMapping(value = "/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/{imageName}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable("imageName") String imageName) {
         try {
         	
@@ -42,8 +42,9 @@ public class ImageController {
             byte[] data = Files.readAllBytes(path);
 
             // return image as a response
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(data);
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(data);
         } catch (IOException e) {
+        	
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
