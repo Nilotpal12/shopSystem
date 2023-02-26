@@ -1,7 +1,7 @@
  	// Java Program to Illustrate DemoController File
 
 // Importing package in this code module
-package com.example.demo.controller;
+package com.example.controller;
 // Importing required classes
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
