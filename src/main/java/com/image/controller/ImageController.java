@@ -12,18 +12,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.apache.logging.log4j.Logger;
+import com.logger.Logging;
 import com.qr.generator.QRGenerator;
 
 @RestController
 @RequestMapping("/api/image")
 public class ImageController {
 	
+	private static final Logger logger = Logging.getInstance().getLogger();
+	
 	@GetMapping(value = "/check", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getImage() {
         try {
         	//just a check
         	String data = "Service is UP";
+
 
             return ResponseEntity.ok().body(data);
         } catch (Exception e) {
