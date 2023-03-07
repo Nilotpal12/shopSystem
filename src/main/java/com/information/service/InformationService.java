@@ -13,7 +13,7 @@ import com.information.dao.CompanyDetailsDAO;
 @Service
 public class InformationService {
 
-	
+	@Autowired
 	CompanyDetailsDAO companyDetailsDAO;
 
 	public ResponseEntity<String> saveCompany(MultipartFile file, String name) {
