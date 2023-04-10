@@ -1,11 +1,8 @@
 package com.information.controller;
 
+import org.springframework.http.HttpStatus;
 import java.util.List;
-
-import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.information.entity.Medicine;
 import com.information.service.InformationService;
 import com.information.service.MedicineService;
-import com.shop.constants.ShopConstants.BasicConstants;
+import com.object.classes.CompanyDetails;
 
 @RestController
 @RequestMapping("/office")
@@ -54,12 +50,24 @@ public class OfficeController {
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
-		return ResponseEntity.status(HttpStatus.SC_OK).body("Medicine SuccessFully Added");
+		return ResponseEntity.status(HttpStatus.OK).body("Medicine SuccessFully Added");
 	}
-	
+
 	@GetMapping("/medicines")
-    public List<Medicine> fetchDepartmentList()
-    {
-        return medicineService.fetchMedicineList();
+	public List<Medicine> fetchDepartmentList() {
+		return medicineService.fetchMedicineList();
     }
+	
+	@PostMapping("/search")
+	public ResponseEntity<List<CompanyDetails>> myControllerMethod(@RequestBody String name) {
+	  
+		ResponseEntity<List<CompanyDetails>> response;
+		try {
+		response = informationService.fetchCompanyDetails(name);
+		}catch(Exception e){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+		
+	  return response;
+	}
 }

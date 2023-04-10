@@ -9,4 +9,5 @@ public class CompanyDetails {
 
 	private String name;
 	private MultipartFile image;
+	private Long Id;
 }
