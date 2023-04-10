@@ -58,8 +58,8 @@ public class OfficeController {
 		return medicineService.fetchMedicineList();
     }
 	
-	@PostMapping("/search")
-	public ResponseEntity<List<CompanyDetails>> myControllerMethod(@RequestBody String name) {
+	@GetMapping("/search")
+	public ResponseEntity<List<CompanyDetails>> myControllerMethod(@RequestParam String name) {
 	  
 		ResponseEntity<List<CompanyDetails>> response;
 		try {

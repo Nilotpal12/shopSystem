@@ -97,8 +97,8 @@ public class CompanyDetailsDAOImpl implements CompanyDetailsDAO {
 				while (rs.next()) {
 					CompanyDetails company = new CompanyDetails();
 					company.setName(rs.getString("COMPANY_NAME"));
-					company.setImage(rs.getString("COMPANY_IMAGE"));
-					company.setId(rs.getInt("COMPANY_ID"));
+					//company.setImage(rs.getString("COMPANY_IMAGE"));
+					//company.setId(rs.getInt("COMPANY_ID"));
 					companyList.add(company);
 				}
 				return null;
