@@ -1,6 +1,7 @@
 package com.information.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.information.dao.CompanyDetailsDAO;
+import com.object.classes.CompanyDetails;
 
 @Service
 public class InformationService {
@@ -46,6 +48,11 @@ public class InformationService {
 	    return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
 	}
 
+	public ResponseEntity<List<CompanyDetails>> fetchCompanyDetails(String name) {
+		return companyDetailsDAO.getCompanyData(name);
+	}
+
+	
 
 	
 	
