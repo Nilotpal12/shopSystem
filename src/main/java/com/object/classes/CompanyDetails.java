@@ -9,7 +9,7 @@ public class CompanyDetails {
 
 	private String name;
 	private MultipartFile image;
-	private Long Id;
+	private int Id;
 	public String getName() {
 		return name;
 	}
@@ -22,10 +22,10 @@ public class CompanyDetails {
 	public void setImage(MultipartFile image) {
 		this.image = image;
 	}
-	public Long getId() {
+	public int getId() {
 		return Id;
 	}
-	public void setId(Long id) {
+	public void setId(int id) {
 		Id = id;
 	}
 }

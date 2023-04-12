@@ -40,22 +40,53 @@ public class OfficeController {
 	}
 	
 	@PostMapping("/addMedicineDetails")
-	public ResponseEntity<String> AddMedicine(@RequestBody Medicine medicine) {
-		ResponseEntity<String> response;
+	public ResponseEntity<String> AddMedicine(@RequestBody Medicine medicine, @RequestParam String brand) {
+		ResponseEntity<List<CompanyDetails>> response;
 		try {
-			System.out.println(medicine.getName());
-			System.out.println(medicine.getPrice_rate());
-			Medicine retmedicine = medicineService.saveMedicine(medicine);
+			if(brand != null && !brand.equals("")) {
+				response = informationService.fetchCompanyDetails(brand);
+				List<CompanyDetails> companyDetails = response.getBody();
+				if(companyDetails.size()>0) {
+					int id = companyDetails.get(0).getId();
+					medicine.setComp_id(id);
+				}
+				Medicine retmedicine = medicineService.saveMedicine(medicine);
+				if (retmedicine == null) {
+					return ResponseEntity.badRequest().body("Duplicate Medicine");
+				}else {
+					return ResponseEntity.ok().body("Medicine SuccessFully Added");
+				}
+			}else {
+				return ResponseEntity.badRequest().body("Please provide Company Name");
+			}
 
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
-		return ResponseEntity.status(HttpStatus.OK).body("Medicine SuccessFully Added");
+		//return ResponseEntity.status(HttpStatus.OK).body("Medicine SuccessFully Added");
 	}
 
 	@GetMapping("/medicines")
-	public List<Medicine> fetchDepartmentList() {
-		return medicineService.fetchMedicineList();
+	public ResponseEntity<List<Medicine>> fetchDepartmentList(@RequestParam String brand) {
+		ResponseEntity<List<CompanyDetails>> response;
+		try {
+			if(brand != null && !brand.equals("")) {
+				response= informationService.fetchCompanyDetails(brand);
+				List<CompanyDetails> companyDetails = response.getBody();
+				if(companyDetails.size()>0) {
+					int id = companyDetails.get(0).getId();
+					List<Medicine> medList = medicineService.fetchMedicineList(id);
+					return ResponseEntity.ok().body(medList);
+				}
+			}else {
+				return ResponseEntity.badRequest().body(null);
+			}
+
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(null);
+		}
+		return ResponseEntity.badRequest().body(null);
+		
     }
 	
 	@GetMapping("/search")
