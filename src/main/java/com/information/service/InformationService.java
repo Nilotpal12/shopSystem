@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.information.dao.CompanyDetailsDAO;
 import com.object.classes.CompanyDetails;
+import com.object.classes.CompanyDetailsResp;
 
 @Service
 public class InformationService {
@@ -48,7 +49,7 @@ public class InformationService {
 	    return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
 	}
 
-	public ResponseEntity<List<CompanyDetails>> fetchCompanyDetails(String name) {
+	public ResponseEntity<List<CompanyDetailsResp>> fetchCompanyDetails(String name) {
 		return companyDetailsDAO.getCompanyData(name);
 	}
 

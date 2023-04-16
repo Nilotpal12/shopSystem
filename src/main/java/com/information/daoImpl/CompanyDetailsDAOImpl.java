@@ -1,5 +1,9 @@
 package com.information.daoImpl;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -9,6 +13,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +30,7 @@ import org.springframework.stereotype.Repository;
 
 import com.information.dao.CompanyDetailsDAO;
 import com.object.classes.CompanyDetails;
+import com.object.classes.CompanyDetailsResp;
 
 @Repository
 public class CompanyDetailsDAOImpl implements CompanyDetailsDAO {
@@ -86,8 +92,8 @@ public class CompanyDetailsDAOImpl implements CompanyDetailsDAO {
 	}
 
 	
-	public ResponseEntity<List<CompanyDetails>> getCompanyData(String inputParam) {
-		List<CompanyDetails> companyList = new ArrayList<>();
+	public ResponseEntity<List<CompanyDetailsResp>> getCompanyData(String inputParam) {
+		List<CompanyDetailsResp> companyList = new ArrayList<>();
 		try {
 			jdbcTemplate.execute("{call get_company_data(?, ?)}", (CallableStatementCallback<Void>) callStatement -> {
 				callStatement.setObject(1, inputParam);
@@ -95,9 +101,10 @@ public class CompanyDetailsDAOImpl implements CompanyDetailsDAO {
 				callStatement.execute();
 				ResultSet rs = (ResultSet) callStatement.getObject(2);
 				while (rs.next()) {
-					CompanyDetails company = new CompanyDetails();
+					CompanyDetailsResp company = new CompanyDetailsResp();
 					company.setName(rs.getString("COMPANY_NAME"));
-					//company.setImage(rs.getString("COMPANY_IMAGE"));
+					Blob imageBlob = rs.getBlob("COMPANY_IMAGE");
+					company.setImage(imageBlob);
 					company.setId(rs.getInt("COMPANY_ID"));
 					companyList.add(company);
 				}

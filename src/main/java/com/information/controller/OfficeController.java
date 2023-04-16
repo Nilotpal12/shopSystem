@@ -15,6 +15,7 @@ import com.information.entity.Medicine;
 import com.information.service.InformationService;
 import com.information.service.MedicineService;
 import com.object.classes.CompanyDetails;
+import com.object.classes.CompanyDetailsResp;
 
 @RestController
 @RequestMapping("/office")
@@ -41,11 +42,11 @@ public class OfficeController {
 	
 	@PostMapping("/addMedicineDetails")
 	public ResponseEntity<String> AddMedicine(@RequestBody Medicine medicine, @RequestParam String brand) {
-		ResponseEntity<List<CompanyDetails>> response;
+		ResponseEntity<List<CompanyDetailsResp>> response;
 		try {
 			if(brand != null && !brand.equals("")) {
 				response = informationService.fetchCompanyDetails(brand);
-				List<CompanyDetails> companyDetails = response.getBody();
+				List<CompanyDetailsResp> companyDetails = response.getBody();
 				if(companyDetails.size()>0) {
 					int id = companyDetails.get(0).getId();
 					medicine.setComp_id(id);
@@ -68,11 +69,11 @@ public class OfficeController {
 
 	@GetMapping("/medicines")
 	public ResponseEntity<List<Medicine>> fetchDepartmentList(@RequestParam String brand) {
-		ResponseEntity<List<CompanyDetails>> response;
+		ResponseEntity<List<CompanyDetailsResp>> response;
 		try {
 			if(brand != null && !brand.equals("")) {
 				response= informationService.fetchCompanyDetails(brand);
-				List<CompanyDetails> companyDetails = response.getBody();
+				List<CompanyDetailsResp> companyDetails = response.getBody();
 				if(companyDetails.size()>0) {
 					int id = companyDetails.get(0).getId();
 					List<Medicine> medList = medicineService.fetchMedicineList(id);
@@ -90,9 +91,9 @@ public class OfficeController {
     }
 	
 	@GetMapping("/search")
-	public ResponseEntity<List<CompanyDetails>> myControllerMethod(@RequestParam String name) {
+	public ResponseEntity<List<CompanyDetailsResp>> myControllerMethod(@RequestParam String name) {
 	  
-		ResponseEntity<List<CompanyDetails>> response;
+		ResponseEntity<List<CompanyDetailsResp>> response;
 		try {
 		response = informationService.fetchCompanyDetails(name);
 		}catch(Exception e){
@@ -100,5 +101,18 @@ public class OfficeController {
 		}
 		
 	  return response;
+	}
+	
+	@GetMapping("/searchMed")
+	public ResponseEntity<List<Medicine>> searchMedicineByName(@RequestParam String name) {
+	  
+		List<Medicine> response;
+		try {
+		response = medicineService.searchMedicineByName(name);
+		}catch(Exception e){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+		
+	  return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 }

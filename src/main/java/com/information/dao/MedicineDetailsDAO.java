@@ -15,6 +15,8 @@ public interface MedicineDetailsDAO extends JpaRepository<Medicine, Long>{
 	
 	@Query("select u from MEDICINES u where u.comp_id = ?1")
 	List<Medicine> findByCompanyId(int companyId);
-
+	
+	@Query("select u from MEDICINES u where u.name like CONCAT('%',:medicineName,'%')")
+	List<Medicine> findMedicinesByName(String medicineName);
 
 }

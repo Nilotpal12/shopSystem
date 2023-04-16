@@ -37,5 +37,10 @@ public class MedicineService {
     {
         return (List<Medicine>)medicineDao.findByCompanyId(compID);
     }
+    
+    public List<Medicine> searchMedicineByName(String medName)
+    {
+        return (List<Medicine>)medicineDao.findMedicinesByName(medName);
+    }
 
 }
